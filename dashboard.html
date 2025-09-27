@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Dashboard - Recipe Finder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-utensils me-2"></i>
+                Recipe Finder
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="search.html">Browse Recipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="meal-planner.html">Meal Planner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="submit-recipe.html">Submit Recipe</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dashboard.html">
+                            <i class="fas fa-heart me-1"></i>
+                            <span class="favorites-count">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html" id="authLink">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard -->
+    <section class="dashboard">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="page-title">My Dashboard</h1>
+                </div>
+            </div>
+
+            <!-- Dashboard Tabs -->
+            <ul class="nav nav-tabs dashboard-tabs" id="dashboardTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="favorites-tab" data-bs-toggle="tab" data-bs-target="#favorites" type="button">
+                        <i class="fas fa-heart me-2"></i>Favorite Recipes
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="shopping-tab" data-bs-toggle="tab" data-bs-target="#shopping" type="button">
+                        <i class="fas fa-shopping-list me-2"></i>Shopping List
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button">
+                        <i class="fas fa-history me-2"></i>Recipe History
+                    </button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content dashboard-content" id="dashboardTabsContent">
+                <!-- Favorites Tab -->
+                <div class="tab-pane fade show active" id="favorites" role="tabpanel">
+                    <div class="tab-header">
+                        <h3>Your Favorite Recipes</h3>
+                        <p>Recipes you've saved for later</p>
+                    </div>
+                    <div class="row" id="favoriteRecipes">
+                        <!-- Favorite recipes will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Shopping List Tab -->
+                <div class="tab-pane fade" id="shopping" role="tabpanel">
+                    <div class="tab-header">
+                        <h3>Shopping List</h3>
+                        <p>Ingredients from your meal plan and favorite recipes</p>
+                        <button class="btn btn-outline-primary btn-sm" onclick="clearShoppingList()">Clear All</button>
+                    </div>
+                    <div class="shopping-list" id="shoppingList">
+                        <!-- Shopping list will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- History Tab -->
+                <div class="tab-pane fade" id="history" role="tabpanel">
+                    <div class="tab-header">
+                        <h3>Recipe History</h3>
+                        <p>Recently viewed recipes</p>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="clearHistory()">Clear History</button>
+                    </div>
+                    <div class="row" id="recipeHistory">
+                        <!-- Recipe history will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <h5>Recipe Finder</h5>
+                    <p>Discover, cook, and share amazing recipes with our community.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

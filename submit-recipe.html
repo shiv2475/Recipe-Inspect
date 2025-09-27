@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit Recipe - Recipe Finder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-utensils me-2"></i>
+                Recipe Finder
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="search.html">Browse Recipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="meal-planner.html">Meal Planner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="submit-recipe.html">Submit Recipe</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="fas fa-heart me-1"></i>
+                            <span class="favorites-count">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html" id="authLink">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Submit Recipe Form -->
+    <section class="submit-recipe">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="submit-form-container">
+                        <h1 class="page-title text-center">Share Your Recipe</h1>
+                        <p class="text-center text-muted mb-5">Help others discover amazing dishes by sharing your favorite recipes</p>
+
+                        <form id="submitRecipeForm" onsubmit="handleRecipeSubmit(event)">
+                            <!-- Basic Information -->
+                            <div class="form-section">
+                                <h4>Basic Information</h4>
+                                
+                                <div class="mb-3">
+                                    <label for="recipeName" class="form-label">Recipe Name *</label>
+                                    <input type="text" class="form-control" id="recipeName" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description *</label>
+                                    <textarea class="form-control" id="description" rows="3" 
+                                              placeholder="Brief description of your recipe..." required></textarea>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="cookTime" class="form-label">Cooking Time (minutes) *</label>
+                                        <input type="number" class="form-control" id="cookTime" min="1" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="servings" class="form-label">Servings *</label>
+                                        <input type="number" class="form-control" id="servings" min="1" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="difficulty" class="form-label">Difficulty *</label>
+                                        <select class="form-select" id="difficulty" required>
+                                            <option value="">Select...</option>
+                                            <option value="Easy">Easy</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="Hard">Hard</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Categories -->
+                            <div class="form-section">
+                                <h4>Categories</h4>
+                                <div class="row" id="categoryCheckboxes">
+                                    <!-- Category checkboxes will be loaded here -->
+                                </div>
+                            </div>
+
+                            <!-- Ingredients -->
+                            <div class="form-section">
+                                <h4>Ingredients</h4>
+                                <div id="ingredientsList">
+                                    <div class="ingredient-item mb-2">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control ingredient-input" placeholder="e.g., 2 cups flour" required>
+                                            <button type="button" class="btn btn-outline-danger" onclick="removeIngredient(this)">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="addIngredient()">
+                                    <i class="fas fa-plus me-2"></i>Add Ingredient
+                                </button>
+                            </div>
+
+                            <!-- Instructions -->
+                            <div class="form-section">
+                                <h4>Instructions</h4>
+                                <div id="instructionsList">
+                                    <div class="instruction-item mb-2">
+                                        <div class="input-group">
+                                            <span class="input-group-text">1</span>
+                                            <textarea class="form-control instruction-input" rows="2" placeholder="Describe this step..." required></textarea>
+                                            <button type="button" class="btn btn-outline-danger" onclick="removeInstruction(this)">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="addInstruction()">
+                                    <i class="fas fa-plus me-2"></i>Add Step
+                                </button>
+                            </div>
+
+                            <!-- Image -->
+                            <div class="form-section">
+                                <h4>Recipe Image</h4>
+                                <div class="mb-3">
+                                    <label for="imageUrl" class="form-label">Image URL</label>
+                                    <input type="url" class="form-control" id="imageUrl" 
+                                           placeholder="https://example.com/recipe-image.jpg">
+                                    <div class="form-text">Add a URL to an image of your finished dish</div>
+                                </div>
+                            </div>
+
+                            <!-- Nutrition (Optional) -->
+                            <div class="form-section">
+                                <h4>Nutrition Information <span class="text-muted">(Optional)</span></h4>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label for="calories" class="form-label">Calories</label>
+                                        <input type="number" class="form-control" id="calories" min="0">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="protein" class="form-label">Protein (g)</label>
+                                        <input type="number" class="form-control" id="protein" min="0" step="0.1">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="carbs" class="form-label">Carbs (g)</label>
+                                        <input type="number" class="form-control" id="carbs" min="0" step="0.1">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="fat" class="form-label">Fat (g)</label>
+                                        <input type="number" class="form-control" id="fat" min="0" step="0.1">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit -->
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-paper-plane me-2"></i>Submit Recipe
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <h5>Recipe Finder</h5>
+                    <p>Discover, cook, and share amazing recipes with our community.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/submit-recipe.js"></script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Browse Recipes - Recipe Finder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-utensils me-2"></i>
+                Recipe Finder
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="search.html">Browse Recipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="meal-planner.html">Meal Planner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="submit-recipe.html">Submit Recipe</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="fas fa-heart me-1"></i>
+                            <span class="favorites-count">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html" id="authLink">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Header -->
+    <section class="search-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="page-title">Browse Recipes</h1>
+                    <div class="search-bar-container">
+                        <form class="search-form" onsubmit="performSearch(event)">
+                            <div class="input-group search-input-group">
+                                <input type="text" class="form-control search-input" 
+                                       placeholder="Search recipes..." 
+                                       id="searchInput">
+                                <button class="btn search-btn" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters and Results -->
+    <section class="search-results">
+        <div class="container">
+            <div class="row">
+                <!-- Filters Sidebar -->
+                <div class="col-lg-3">
+                    <div class="filters-sidebar">
+                        <h5>Filters</h5>
+                        
+                        <!-- Categories -->
+                        <div class="filter-group">
+                            <h6>Categories</h6>
+                            <div id="categoryFilters">
+                                <!-- Category filters will be loaded here -->
+                            </div>
+                        </div>
+
+                        <!-- Cooking Time -->
+                        <div class="filter-group">
+                            <h6>Cooking Time</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="time15" value="15" onchange="applyFilters()">
+                                <label class="form-check-label" for="time15">Under 15 min</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="time30" value="30" onchange="applyFilters()">
+                                <label class="form-check-label" for="time30">15-30 min</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="time60" value="60" onchange="applyFilters()">
+                                <label class="form-check-label" for="time60">30-60 min</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="time60plus" value="60+" onchange="applyFilters()">
+                                <label class="form-check-label" for="time60plus">Over 60 min</label>
+                            </div>
+                        </div>
+
+                        <!-- Difficulty -->
+                        <div class="filter-group">
+                            <h6>Difficulty</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="easy" value="Easy" onchange="applyFilters()">
+                                <label class="form-check-label" for="easy">Easy</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="medium" value="Medium" onchange="applyFilters()">
+                                <label class="form-check-label" for="medium">Medium</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hard" value="Hard" onchange="applyFilters()">
+                                <label class="form-check-label" for="hard">Hard</label>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-outline-secondary btn-sm" onclick="clearFilters()">Clear All Filters</button>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="col-lg-9">
+                    <div class="results-header">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <span id="resultsCount">0</span> recipes found
+                                <span id="searchQuery" class="text-muted"></span>
+                            </div>
+                            <select class="form-select form-select-sm" style="width: auto;" onchange="sortResults(this.value)">
+                                <option value="relevance">Sort by Relevance</option>
+                                <option value="rating">Highest Rated</option>
+                                <option value="time">Cooking Time</option>
+                                <option value="newest">Newest First</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row" id="searchResults">
+                        <!-- Search results will be loaded here -->
+                    </div>
+
+                    <!-- Pagination -->
+                    <nav aria-label="Search results pagination" class="mt-4">
+                        <ul class="pagination justify-content-center" id="pagination">
+                            <!-- Pagination will be loaded here -->
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <h5>Recipe Finder</h5>
+                    <p>Discover, cook, and share amazing recipes with our community.</p>
+                </div>
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-6 col-md-3">
+                            <h6>Recipes</h6>
+                            <ul class="footer-links">
+                                <li><a href="search.html?category=breakfast">Breakfast</a></li>
+                                <li><a href="search.html?category=lunch">Lunch</a></li>
+                                <li><a href="search.html?category=dinner">Dinner</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <h6>Features</h6>
+                            <ul class="footer-links">
+                                <li><a href="meal-planner.html">Meal Planner</a></li>
+                                <li><a href="dashboard.html">My Favorites</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/search.js"></script>
+</body>
+</html>

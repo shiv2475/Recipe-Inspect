@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meal Planner - Recipe Finder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-utensils me-2"></i>
+                Recipe Finder
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="search.html">Browse Recipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="meal-planner.html">Meal Planner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="submit-recipe.html">Submit Recipe</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="fas fa-heart me-1"></i>
+                            <span class="favorites-count">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html" id="authLink">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Meal Planner -->
+    <section class="meal-planner">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h1 class="page-title">Meal Planner</h1>
+                            <p class="text-muted">Plan your weekly meals and generate shopping lists</p>
+                        </div>
+                        <div>
+                            <button class="btn btn-outline-primary me-2" onclick="generateShoppingList()">
+                                <i class="fas fa-shopping-list me-2"></i>Generate Shopping List
+                            </button>
+                            <button class="btn btn-primary" onclick="clearMealPlan()">
+                                <i class="fas fa-trash me-2"></i>Clear Plan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Recipe Suggestions -->
+                <div class="col-lg-3">
+                    <div class="recipe-suggestions">
+                        <h5>Quick Add Recipes</h5>
+                        <div class="search-mini mb-3">
+                            <input type="text" class="form-control form-control-sm" 
+                                   placeholder="Search recipes..." 
+                                   onkeyup="searchMealRecipes(this.value)">
+                        </div>
+                        <div id="mealRecipeSuggestions">
+                            <!-- Recipe suggestions will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weekly Calendar -->
+                <div class="col-lg-9">
+                    <div class="meal-calendar">
+                        <div class="calendar-header">
+                            <div class="row text-center">
+                                <div class="col">
+                                    <div class="day-header">Monday</div>
+                                </div>
+                                <div class="col">
+                                    <div class="day-header">Tuesday</div>
+                                </div>
+                                <div class="col">
+                                    <div class="day-header">Wednesday</div>
+                                </div>
+                                <div class="col">
+                                    <div class="day-header">Thursday</div>
+                                </div>
+                                <div class="col">
+                                    <div class="day-header">Friday</div>
+                                </div>
+                                <div class="col">
+                                    <div class="day-header">Saturday</div>
+                                </div>
+                                <div class="col">
+                                    <div class="day-header">Sunday</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Breakfast Row -->
+                        <div class="meal-row">
+                            <div class="meal-label">Breakfast</div>
+                            <div class="row">
+                                <div class="col" data-day="monday" data-meal="breakfast">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('monday', 'breakfast')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="tuesday" data-meal="breakfast">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('tuesday', 'breakfast')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="wednesday" data-meal="breakfast">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('wednesday', 'breakfast')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="thursday" data-meal="breakfast">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('thursday', 'breakfast')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="friday" data-meal="breakfast">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('friday', 'breakfast')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="saturday" data-meal="breakfast">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('saturday', 'breakfast')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="sunday" data-meal="breakfast">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('sunday', 'breakfast')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Lunch Row -->
+                        <div class="meal-row">
+                            <div class="meal-label">Lunch</div>
+                            <div class="row">
+                                <div class="col" data-day="monday" data-meal="lunch">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('monday', 'lunch')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="tuesday" data-meal="lunch">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('tuesday', 'lunch')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="wednesday" data-meal="lunch">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('wednesday', 'lunch')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="thursday" data-meal="lunch">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('thursday', 'lunch')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="friday" data-meal="lunch">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('friday', 'lunch')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="saturday" data-meal="lunch">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('saturday', 'lunch')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="sunday" data-meal="lunch">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('sunday', 'lunch')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dinner Row -->
+                        <div class="meal-row">
+                            <div class="meal-label">Dinner</div>
+                            <div class="row">
+                                <div class="col" data-day="monday" data-meal="dinner">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('monday', 'dinner')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="tuesday" data-meal="dinner">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('tuesday', 'dinner')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="wednesday" data-meal="dinner">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('wednesday', 'dinner')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="thursday" data-meal="dinner">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('thursday', 'dinner')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="friday" data-meal="dinner">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('friday', 'dinner')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="saturday" data-meal="dinner">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('saturday', 'dinner')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col" data-day="sunday" data-meal="dinner">
+                                    <div class="meal-slot" ondrop="dropMeal(event)" ondragover="allowDrop(event)">
+                                        <div class="add-meal-btn" onclick="showMealModal('sunday', 'dinner')">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Meal Modal -->
+    <div class="modal fade" id="mealModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Recipe to Meal Plan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="search-recipes mb-3">
+                        <input type="text" class="form-control" placeholder="Search for recipes..." onkeyup="searchModalRecipes(this.value)">
+                    </div>
+                    <div class="row" id="modalRecipeResults">
+                        <!-- Recipe results will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <h5>Recipe Finder</h5>
+                    <p>Discover, cook, and share amazing recipes with our community.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/meal-planner.js"></script>
+</body>
+</html>
